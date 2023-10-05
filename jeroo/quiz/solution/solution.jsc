@@ -1,0 +1,60 @@
+@Java
+method advance() {
+  if (!(isFacing(WEST) && isWater(LEFT) && isWater(AHEAD))) {
+    // turn
+    if (!(isFacing(WEST) && isWater(LEFT) && isWater(AHEAD)) && isWater(AHEAD)) {
+      if (isFacing(EAST)) {
+        turnCW();
+      } else {
+        turnCCW();
+      }
+    }
+    
+    if (isFlower(HERE)) {
+      pickRow();
+      advance();
+    } else if (hasFlower()) {
+      plantRow();
+      advance();
+    }
+  }
+}
+
+// Jeroo picks a full row of flowers
+method pickRow() {
+  pick();
+  
+  if (!isWater(AHEAD)) {
+    hop();
+    pickRow();
+  }
+}
+
+// Jeroo plants a full row of flowers
+method plantRow() {
+  plant();
+  
+  if (!isWater(AHEAD)) hop();
+  
+  if (hasFlower()) plantRow();
+}
+
+// Jeroo moves to next row turning clockwise
+method turnCW() {
+  turn(RIGHT);
+  hop();
+  turn(RIGHT);
+}
+
+//Jeroo moves to next row turning counterclockwise
+method turnCCW() {
+  turn(LEFT);
+  hop();
+  turn(LEFT);
+}
+@@
+method main() {
+  Jeroo alex = new Jeroo();
+  
+  alex.advance();
+}

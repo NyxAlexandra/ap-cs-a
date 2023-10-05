@@ -1,0 +1,44 @@
+@Java
+// I would have went with a recursive solution (like the previous 2 labs),
+// but this way is more expressive (in this case)
+
+method go() {
+  // while not in end position
+  while (!(isFacing(WEST) && isWater(AHEAD) && isWater(LEFT))) {
+    step();
+  }
+}
+
+method step() {
+  // don't check `if (isFlower(HERE))`, as there is no consequence to just
+  // trying to pick up a flower on every square
+  // 
+  // speed-wise, they are also identical
+  pick();
+  
+  if (!isWater(AHEAD)) {
+    hop();
+  } else if (isFacing(EAST)) {
+      turn(RIGHT);
+      hop();
+      turn(RIGHT);
+  } else {
+    turn(LEFT);
+    hop();
+    turn(LEFT);
+  }
+}
+@@
+// # Jeroo Lab 3
+// 
+// Description:
+// 
+// > Create two methods that would allow Pinball to pick all flowers and come to a
+// > stop before jumping off the island into the water. Pinball must avoid the water
+// > and must not miss a space in picking every flower.
+
+method main() {
+  Jeroo jeroo = new Jeroo();
+  
+  jeroo.go();
+}

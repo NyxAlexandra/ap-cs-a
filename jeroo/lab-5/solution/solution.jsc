@@ -1,0 +1,28 @@
+@Java
+method go() {
+  while (!(isWater(AHEAD) && isWater(RIGHT))) step();
+}
+
+method step() {
+  if (isClear(AHEAD)) {
+    hop();
+  } else {
+    turn(RIGHT);
+  }
+}
+@@
+// # Jeroo Lab 5
+// 
+// Description:
+// 
+// > This lab requires you to use the commands AND ( && ) and OR( || ) in order to
+// > create the methods needed. Your Jeroo must make its way through the entire maze
+// > and stop facing the water. You can solve this with just a few methods Think in
+// > simplest terms. It is not as difficult as it first appears.  Methods will
+// > definitely be used more than once.
+
+method main() {
+  Jeroo jeroo = new Jeroo(1, 0);
+  
+  jeroo.go();
+}

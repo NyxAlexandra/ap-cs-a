@@ -1,0 +1,115 @@
+@Java
+// not a very clean implementation, but it's hard to do otherwise without
+// function arguments or variables in general
+
+method takeFlowers() {
+  while (!isWater(AHEAD)) {
+    if (isFlower(LEFT)) {
+      turn(LEFT);
+      hop();
+      pick();
+      reverse();
+      hop();
+      turn(LEFT);
+    }
+
+    if (isFlower(RIGHT)) {
+      turn(RIGHT);
+      hop();
+      pick();
+      reverse();
+      hop();
+      turn(RIGHT);
+    }
+    
+    hop();
+  }
+  
+  reverse();
+  while (!isWater(AHEAD)) {
+    hop();
+  }
+  reverse();
+}
+
+method plantFlowers() {
+  while (hasFlower()) {
+    // plant on nets
+    
+    if (isNet(LEFT)) {
+      turn(LEFT);
+      toss();
+      hop();
+      plant();
+      reverse();
+      hop();
+      turn(LEFT);
+    }
+    
+    if (isNet(RIGHT)) {
+      turn(RIGHT);
+      toss();
+      hop();
+      plant();
+      reverse();
+      hop();
+      turn(RIGHT);
+    }
+    
+    // plant across from water
+    
+    if (isWater(LEFT) && !isFlower(RIGHT)) {
+      turn(RIGHT);
+      hop();
+      plant();
+      reverse();
+      hop();
+      turn(RIGHT);
+    } else if (isWater(RIGHT) && !isFlower(LEFT)) {
+      turn(LEFT);
+      hop();
+      plant();
+      reverse();
+      hop();
+      turn(LEFT);
+    }
+    
+    hop();
+  }
+}
+
+method reverse() {
+  turn(LEFT);
+  turn(LEFT);
+}
+@@
+// # Jeroo Lab 4
+// 
+// Description:
+// 
+// > This lab requires you to use a wide variety of if commands. Each cycle of the loop
+// > may produce movement on more than 1 conditional at a time. The Jeroo must pick all
+// > flowers that it finds, it must  replace each net with a flower, and anytime it finds
+// > water to the left or the right, it must plant a flower on the side opposite the water.
+// > After all of the various conditionals are met, the jeroo should hop once in the
+// > direction it is currently facing. This type of programming involves not only using if
+// > but using else also. Failure to use the proper commands will mean your Jeroo is at
+// > risk as he may end up in the water or the nets.
+
+method main() {
+  // flower count:
+  // 
+  // + 17 provided
+  // - 10 tossed on nets
+  // - 10 planted on nets
+  // - 6 across from water
+  // = -9
+  // 
+  // so, provide 9 extra
+  Jeroo jeroo = new Jeroo(1, 0, 9);
+  
+  // traverse row, taking all flowers on the way, then returning to starting position
+  jeroo.takeFlowers();
+  // plant the flowers on each net
+  jeroo.plantFlowers();
+}

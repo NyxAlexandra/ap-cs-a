@@ -1,0 +1,34 @@
+@Java
+method advance() {
+  if (!isFlower(HERE)) {
+    plantOrTurn();
+    
+    if (hasFlower()) {
+    	hop();
+    	advance();
+    }
+  }
+}
+
+/// The required second method
+method plantOrTurn() {
+  if (isWater(RIGHT)) {
+    plant();
+  } else {
+    turn(RIGHT);
+  }  
+}
+@@
+// # Jeroo Lab 2
+// 
+// Description:
+// 
+// > Create a single method that allows your Jeroo to protect the other Jeroos by
+// > enclosing a single waterhole with a wall of flowers as a signal of the
+// > dangerous areas of the island. 
+
+method main() {
+  Jeroo jeroo = new Jeroo(4, 7, /* width 8 * 4 */ 32);
+  
+  jeroo.advance();
+}

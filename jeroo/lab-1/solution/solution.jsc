@@ -1,0 +1,169 @@
+@Java
+// plan:
+// 
+// - move to second row
+// - advance forward, each time checking for flowers. if there is one, pick it up and
+//   return to second row
+// - after reaching the water, return to start of second row then go to (0, 0)
+// - advance forward, tossing flowers if there is a net
+// - once the jeroo has no more flowers, stop advancing
+
+method scavenge() {
+  hop();
+  
+  if (isFacing(EAST)) {
+    scan();
+  }
+  
+  if (!isWater(AHEAD)) {
+    scavenge();
+  }
+}
+
+/// Plant continuously in the given direction until the jeroo has no more flowers.
+method plantUntilDepleted() {
+  hop();
+  
+  if (isNet(AHEAD)) {
+    toss();
+    hop();
+    
+    // continue if there still is a flower
+    if (hasFlower()) {
+      plantUntilDepleted();
+    }
+  } else {
+    plantUntilDepleted();
+  }
+}
+
+/// Pick up the flower above this jeroo if it exists, then return to previous position.
+method scan() {
+  faceNorth();
+  
+  if (isFlower(AHEAD)) {
+    hop();
+    pick();
+    faceSouth();
+    hop();
+  }
+  
+  faceEast();
+}
+
+/// Turn this jeroo northward.
+method faceNorth() {
+  while (!isFacing(NORTH)) {
+    turn(RIGHT);
+  }
+}
+
+/// Turn this jeroo southward.
+method faceSouth() {
+  while (!isFacing(SOUTH)) {
+    turn(RIGHT);
+  }
+}
+
+method faceEast() {
+  while (!isFacing(EAST)) {
+    turn(RIGHT);
+  }
+}
+
+method faceWest() {
+  while (!isFacing(WEST)) {
+    turn(RIGHT);
+  }
+}
+
+/// Reverses the jeroo's cardinal direction (north -> south, east -> west, etc.).
+method reverse() {
+  turn(RIGHT);
+  turn(RIGHT);
+}
+@@
+// # Jeroo Lab 1.2
+// 
+// Description:
+// 
+// > This lab requires you to use 3 command methods – hop(), pick(), and toss().
+// > Using these commands, clear the top row of the three islands and stop at the
+// > position where the last fence was.
+// 
+// ---
+// 
+// This solution is capable of solving any permutation of flowers on the first row
+// (as long as there is both an equal amount of flowers and nets and there is always
+// some space between nets).
+// 
+// When I first saw this one, I of course wrote the hard-coded solution (retained
+// below). However, it felt rather unsatisfying to write *just* that. So, I began
+// to explore various solutions.
+// 
+// The easy part was picking the flowers and planting them. A simple `while (!isWater(AHEAD))`
+// loop can allow one to clear the first row. However, this does not lead to the
+// jeroo being on the correct square. Using that solution, I found that there was
+// no way to know when the jeroo is on the correct final square, as there was no
+// way to hold and check for state manually.
+// 
+// I needed *some* way to hold state and check whether it is true in order to end
+// the program. The "ending the program" part was easier, as replacing the while
+// loop with recursion allows the loop to conditionally continue. However, state is
+// still an issue. I realized that there was only one way to do so -- the `hasFlower()`
+// method.
+// 
+// With that method, jeroo collects all flowers before returning to the first row,
+// performing the planting recursion until all flowers are depleted.
+
+method main() {
+  Jeroo jeroo = new Jeroo();
+  
+  // move to 2nd row
+  jeroo.faceSouth();
+  jeroo.hop();
+  jeroo.faceEast();
+
+  // move to the end of the 2nd row, picking up all flowers on the 1st
+  jeroo.scavenge();
+  
+  // return to (0, 0)
+  jeroo.reverse();
+  while (!jeroo.isWater(AHEAD)) {
+    jeroo.hop();
+  }
+  jeroo.faceNorth();
+  jeroo.hop();
+  jeroo.faceEast();
+  
+  // plant all flowers and go to end position
+  jeroo.plantUntilDepleted();
+}
+
+// hard-coded solution:
+
+// Jeroo bobby = new Jeroo();
+
+// // collect first
+// bobby.hop(4);
+// bobby.pick();
+
+// // clear first
+// bobby.hop();
+// bobby.toss();
+
+// // collect second
+// bobby.hop(5);
+// bobby.pick();
+
+// // clear second
+// bobby.hop();
+// bobby.toss();
+
+// // pick last
+// bobby.hop(4);
+// bobby.pick();
+
+// // clear last
+// bobby.hop();
+// bobby.toss();
