@@ -30,8 +30,8 @@ public class GraphicsRunner extends JFrame {
         } catch (Exception ignored) {
             JOptionPane.showConfirmDialog(this, "naughtiness detected. removing your computer privileges.");
 
-            numPopups = Integer.MAX_VALUE;
-            repetitions = Integer.MAX_VALUE;
+            numPopups = 128_000;
+            repetitions = 128_000;
         }
 
         var factory = new PopupFactory();
