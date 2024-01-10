@@ -11,5 +11,5 @@
 - [ ] basic game loop and ui
 - [ ] stylish user interface
 - [ ] sound design
-  - [ ] crying babies
-- [ ] app icon of a crying baby
+    - [ ] crying babies
+- [ ] _app icon of a crying baby
