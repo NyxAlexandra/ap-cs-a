@@ -4,6 +4,11 @@ import java.util.Random;
 public final class Rng {
   static final Random rng = new Random();
 
+  /** Flip a coin, true if heads. */
+  public static boolean coin() {
+    return rng.nextBoolean();
+  }
+
   /** Roll a D6 (range [1, 6]). */
   public static int d6() {
     return rng.nextInt(0, 6) + 1;
@@ -14,8 +19,8 @@ public final class Rng {
     return rng.nextInt(0, 9) + 1;
   }
 
-  /** Flip a coin, true if heads. */
-  public static boolean coin() {
-    return rng.nextBoolean();
+  /** Random integer of range [1, 100] */
+  public static int number() {
+    return rng.nextInt(0, 100) + 1;
   }
 }

@@ -1,29 +1,34 @@
+import java.util.Objects;
+
 /** A single game of <i>Guardian Gamble</i>™. */
 public class Game {
   /** Amount player wagered. */
-  int wager;
+  public int wager;
 
   /** Result of coin flip. */
-  boolean coin;
+  public boolean coin;
 
   /** First die roll. */
-  int roll1;
+  public int roll1;
 
   /** Second die roll. */
-  int roll2;
+  public int roll2;
 
   /** First dealer-drawn card value. */
-  int draw1;
+  public int draw1;
 
   /** Second dealer-drawn card value. */
-  int draw2;
+  public int draw2;
+
+  /** The number the player needs to guess. */
+  public Integer random;
 
   /**
    * Player-entered guess.
    *
    * <p>Optionally set after coin flip and die rolls. If `null`, no guess.
    */
-  Integer guess;
+  public Integer guess;
 
   /** Simulates a random game with the given wager. */
   public Game(int wager) {
@@ -34,11 +39,7 @@ public class Game {
     roll2 = Rng.d6();
     draw1 = Rng.card();
     draw2 = Rng.card();
-  }
-
-  /** Set the player's guess. */
-  public void setGuess(Integer guess) {
-    this.guess = guess;
+    random = Rng.number();
   }
 
   public boolean playerWins() {
@@ -46,6 +47,7 @@ public class Game {
     int house = houseScore();
 
     if (player == house) return coin;
+    else if (Objects.equals(guess, random)) return true;
     else return player > house;
   }
 
