@@ -59,10 +59,4 @@ public class Game {
   public int houseScore() {
     return draw1 + draw2;
   }
-
-  @Override
-  public String toString() {
-    return String.format(
-        "Game(%d, %d){ %s }", playerScore(), houseScore(), playerWins() ? "win" : "loss");
-  }
 }
