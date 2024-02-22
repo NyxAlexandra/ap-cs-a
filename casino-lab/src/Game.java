@@ -48,12 +48,12 @@ public class Game {
 
     if (player == house) return coin;
     else if (Objects.equals(guess, random)) return true;
-    else return player > house;
+    return player > house;
   }
 
   public int playerScore() {
     if (coin) return roll1 + roll2;
-    else return roll1 * roll2;
+    return roll1 * roll2;
   }
 
   public int houseScore() {

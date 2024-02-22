@@ -1,10 +1,10 @@
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Main {
-  public static void main(String[] _args) {
-    final int NUM_GAMES = 10;
+public class Cli {
+  static final int NUM_GAMES = 10;
 
+  public static void main(String[] _args) {
     Game[] games = new Game[NUM_GAMES];
 
     System.out.println("# Guardian's Gamble™");
@@ -16,9 +16,9 @@ public class Main {
 
     Scanner scanner = new Scanner(System.in);
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < NUM_GAMES; i++) {
       System.out.println();
-      System.out.printf("> game %d\n", i + 1);
+      System.out.println("> game " + (i + 1));
 
       System.out.println();
       System.out.print("wager: ");
@@ -29,8 +29,8 @@ public class Main {
 
       System.out.println();
       System.out.println("coin flip: " + (game.coin ? "heads" : "tails"));
-      System.out.printf("player score: %d + %d = %d\n", game.roll1, game.roll2, game.playerScore());
-      System.out.printf("house score: %d + %d = %d\n", game.draw1, game.draw2, game.houseScore());
+      System.out.println("player score: " + game.playerScore());
+      System.out.println("house score: " + game.houseScore());
 
       System.out.println();
       System.out.println("-> " + (game.playerWins() ? "win" : "loss"));
@@ -38,7 +38,11 @@ public class Main {
       if (!game.playerWins()) {
         System.out.println();
         System.out.print("guess? ");
-        if (scanner.hasNextInt()) game.guess = scanner.nextInt();
+        {
+          String line = scanner.useDelimiter("\n").next();
+
+          if (!line.isEmpty()) game.guess = Integer.valueOf(line);
+        }
 
         System.out.println();
         System.out.printf(
